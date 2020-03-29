@@ -37,18 +37,18 @@ h1{
 }
 
 h2{
-    font-size: 20px;
+    font-size: 30px;
     border-left: 2px solid greenyellow;
     line-height: 20px;
 }
 
 h3{
-    font-size: 18px;
+    font-size: 25px;
     padding-top: 5px;
 }
 
 h4{
-    font-size: 16px;
+    font-size: 20px;
     padding-top: 5px;
 }
 
@@ -63,6 +63,8 @@ img{
 
 img.head{
     margin: 0;
+    width: 95%;
+    height: auto;
 }
 
 img.left{
@@ -103,8 +105,7 @@ img.right{
 }
 
 
-.toggle,
-[id^=drop]{
+.toggle,[id^=drop]{
     display: none;
 }
 
@@ -137,7 +138,7 @@ img.right{
     background-color:transparent;
 }
 
-nav {
+nav{
     margin: 0;
     padding: 0;
     background-color: #003101;
@@ -161,8 +162,7 @@ nav {
 
 }
 
-.nav-icon::before,
-.nav-icon::after{
+.nav-icon::before,.nav-icon::after{
     background: #cbceca;
     content:"";
     display: block;
@@ -202,7 +202,7 @@ nav ul li{
 }
 
 
-nav a{
+header a{
     display: block;
     padding: 0 20px;
     font-size: 20px;
@@ -321,6 +321,48 @@ nav ul ul li:nth-of-type(5){
     border-radius:50%;
 }
 
+.sidemenu{
+    width: 25%;
+    float:left;
+    padding: 0 0 10px 25px;
+    position: sticky;
+    top: 30%;
+}
+
+.sidemenu h2{
+    font-size: 35px;
+    font-weight: 800;
+    border: none;
+    border-bottom: 4px double #282828;
+    display: block;
+    padding: 10px 10px;
+    line-height: 16px;
+    text-align: center;
+}
+
+.sidemenu ul{
+    list-style: square inside url("Imagini/ball.png");
+}
+
+.sidemenu li{
+    border-bottom: 2px solid #3c3c3c;
+    padding-top: 10px;
+}
+
+.sidemenu a{
+    color:#cbfec6;
+    text-decoration: none;
+    font-size: 25px;
+}
+
+.sidemenu a:hover{
+    color: #cbfec6;
+    font-size: 30px;
+}
+
+
+
+
 footer{
     width:100%;
     height:10px;
@@ -329,13 +371,21 @@ footer{
     border-top:1px solid #D9DFD9;
     display: inline-block;
 }
+
+footer a{
+    text-decoration: none;
+    color:#cbfec6
+}
+footer a:hover{
+    text-decoration: underline #cbfec6;
+}
 footer p{
     text-align:center;
     font-size: 16px;
 }
 
 
-@media all and (max-width:985px){
+@media all and (max-width:1280px){
 
     nav{
         margin:0;
@@ -414,15 +464,21 @@ footer p{
     img{max-width:50%;height:auto}
 
     img.head{
-        max-width: 70%;
+        max-width: 100%;
+    }
+
+    img.right{
+        margin: 0 0 0 10px;
     }
 
     #continut{
         width: 90%;
         padding-right: 1%;
-        padding-left: 3%
+        padding-left: 3%;
+        font-size: 30px;
 
     }
+    #continut h3
     #continut-coloane{
         column-count: 1;
     }
@@ -435,4 +491,71 @@ footer p{
         height: auto;
     }
 
+    h1{
+        font-size: 45px;
+        border-left: 4px double greenyellow;
+        padding: 10px 10px;
+        line-height: 16px;
+    }
+    
+    h2{
+        font-size: 34px;
+        border-left: 2px solid greenyellow;
+        line-height: 20px;
+    }
+    
+    h3{
+        font-size: 32px;
+        padding-top: 5px;
+    }
+    
+    h4{
+        font-size: 30px;
+        padding-top: 5px;
+    }
+
+    .sidemenu{
+        display: none;
+    }
+
+
+}
+
+@media all and (max-width:768px){
+    #continut{
+    font-size:20px;
+    }
+
+    h1{
+        font-size: 35px;
+        border-left: 4px double greenyellow;
+        padding: 10px 10px;
+        line-height: 16px;
+    }
+    
+    h2{
+        font-size: 20px;
+        border-left: 2px solid greenyellow;
+        line-height: 20px;
+    }
+    
+    h3{
+        font-size: 18px;
+        padding-top: 5px;
+    }
+    
+    h4{
+        font-size: 16px;
+        padding-top: 5px;
+    }
+}
+
+
+@media all and (max-width:360px){
+.logo_container{
+    width: 248px;
+}
+.headertext{
+    font-size: 25px;
+}
 }
