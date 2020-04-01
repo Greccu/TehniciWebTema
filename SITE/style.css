@@ -69,8 +69,8 @@ img.head{
 
 img.left{
     float:left;
-    margin: 3px 15px 3px 0px;
-    border-radius:5%
+    margin: 0 2px 0 0;
+    padding: 0 2px 0 0;
 }
 
 img.right{
@@ -112,7 +112,7 @@ header{
     position: sticky;
     top: 0;
     margin-bottom: 10px;
-    z-index: 2;
+    z-index: 3;
 }
 
 
@@ -131,6 +131,7 @@ header{
     padding-top: 1px;
     line-height: 25px;
     width: 300px;
+    position: relative;
     z-index: 2;
 }
 
@@ -143,7 +144,7 @@ header{
     font-size: 35px;
     line-height: 30px;
     font-weight: 900;
-    z-index: inherit;
+    z-index: 2;
 }
 
 .headertext:hover{
@@ -155,7 +156,7 @@ nav{
     margin: 0;
     padding: 0;
     background-color: transparent;
-    z-index: 1;
+    z-index: 0;
     display: block;
     position: relative;
     right: 0;
@@ -295,12 +296,82 @@ nav ul ul li:nth-of-type(5){
     padding:4px 2% 15px 20%;
 }
 
-#continut a{
+#continut2{
+    float: left;
+    width: 70%;
+    padding: 4px 15% 15px 15%;
+}
+
+#continut2 h1, #continut2 p{
+    text-align: center;
+    border:none;
+}
+
+#continut2 h2{
+    border: none;
+    display: block;
+    background-color:#3c3c3c;
+    margin: 0;
+    margin-top: 0;
+    border-radius: 13px 13px 0 0;
+    padding: 5px;
+    text-align: center;
+    color:#969696;
+    font-size: 20px;
+}
+
+#continut2 h3{
+    border: none;
+    margin: 0;
+    padding: 5px;
+    font-size: 25px;
+    text-align: center;
+    background-color: #373737;
+    display: block;
+    color: #c8d3c8;
+}
+
+
+.flexcontainer{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.item{
+    border: 1px solid #3c3c3c;
+    border-radius: 15px;
+    flex-basis: 30%;
+    min-width: 280px;
+    margin-bottom: 15px;
+    height: auto;
+}
+
+.item p{
+    font-weight: bolder;
+}
+
+.item .arrow{
+    background-image:url(../Imagini/arrow.png);
+    background-repeat:no-repeat;
+    padding:6px 0 5px 32px;
+    margin: 0;
+    color: red;
+    float: left;
+    line-height: 20px;
+    width: 100%;
+    text-align: left;
+    margin-left: 10px;
+}
+
+
+#continut a, #continut2 a{
     text-decoration: none;
     color:#cbfec6
 }
 
-#continut a:hover{
+#continut a:hover, #continut2 a:hover{
     text-decoration: underline #cbfec6;
 }
 
@@ -349,38 +420,46 @@ nav ul ul li:nth-of-type(5){
 }
 
 .sidemenu h2{
-    font-size: 35px;
+    font-size: 20px;
     font-weight: 800;
     border: none;
     border-bottom: 4px double #282828;
     display: block;
-    padding: 10px 10px;
+    padding: 0px 0px;
+    margin: 0;
     line-height: 16px;
     text-align: center;
 }
 
 .sidemenu ul{
     list-style: square inside url("Imagini/ball.png");
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidemenu li{
     border-bottom: 2px solid #3c3c3c;
-    padding-top: 10px;
-}
-.sidemenu li{
+    padding: 0px 0 0 0;
+    margin: 0;
     color:gold;
+    width: 100%;
 }
 .sidemenu a{
     color:#cbfec6;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 15px;
 }
 
 .sidemenu a:hover{
     color: #cbfec6;
-    font-size: 30px;
+    font-size: 20px;
 }
 
+.sidemenu .fact{
+font-size: 15px;
+color: #cbfec6;
+}
 
 
 
@@ -404,7 +483,6 @@ footer p{
     text-align:center;
     font-size: 16px;
 }
-
 
 @media all and (max-width:1280px){
 
@@ -493,14 +571,13 @@ footer p{
         margin: 0 0 0 10px;
     }
 
-    #continut{
+    #continut,#continut2{
         width: 90%;
-        padding-right: 1%;
+        padding-right: 2%;
         padding-left: 3%;
         font-size: 30px;
 
     }
-    #continut h3
     #continut-coloane{
         column-count: 1;
     }
@@ -539,12 +616,18 @@ footer p{
     .sidemenu{
         display: none;
     }
+    .item{
+        flex-basis: 45%;
+    }
+    .item:nth-of-type(3){
+        align-self: flex-end;
+    }
 
 
 }
 
 @media all and (max-width:768px){
-    #continut{
+    #continut,#continut2{
     font-size:20px;
     }
 
@@ -569,6 +652,9 @@ footer p{
     h4{
         font-size: 16px;
         padding-top: 5px;
+    }
+    .item{
+        flex-basis: 100%;
     }
 }
 
