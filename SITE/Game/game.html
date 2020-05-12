@@ -4,11 +4,14 @@
         <meta charset="UTF-8">
         <meta name="descrition" content="Acest site prezinta istoria fotbalului cele mai bune echipe de fotbal din prezent si din trecut, dar si multe altele!">
         <meta name="author" content="Grecu Cristian">
-        <meta name="viewport" content="width=device-width, initial-size=1,0">
+        <meta name="viewport" content="width=device-width">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Istoria Fotbalului - Game</title>
         <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="game.css">
         <link rel="shortcut icon" type="image/x-icon" href="../icon.ico" />
+
+
     </head>
 
     <body>
@@ -63,11 +66,38 @@
                 </ul>
             </nav>
         </header>
-
-        <div id="continut">
-            <img src="../Imagini/work_in_progress.png" alt="WORK IN PROGRESS" class=head>
+        <div id="container">
+            <div id="scoreContainer" style="display: none"></div>
+            <div id="buttoncontainer">
+                <button class = "but" id="start">Start Quiz!</button>
+                <button class = "but" id="highscore">Show highscores</button>
+                <button class = "but" id="quizsubmit">Submit a question</button>
+            </div>
+            <div id="quiz" style="display: none">
+                <div id="question"></div>
+                <div id="qImg"></div>
+                <div id="choices">
+                    <button class="choice" id="A" onclick="checkAnswer(0)"></button>
+                    <button class="choice" id="B" onclick="checkAnswer(1)"></button>
+                    <button class="choice" id="C" onclick="checkAnswer(2)"></button>
+                    <button class="choice" id="D" onclick="checkAnswer(3)"></button>
+                </div>
+                <div id="timer">
+                    <div id="counter"></div>
+                    <div id="btimeGauge">
+                        <div id="timeGauge"></div>
+                    </div>
+                    
+                </div>
+                <div id="progress"></div>
+            </div>
+            <div id = "quizinput" style = "display: none;"></div>
+            <div class="starttext">
+                <span class="start start-1">Ready</span>
+                <span class="start start-2">Set</span>
+                <span class="start start-3">Go!</span>
+            </div>
         </div>
-
 
         <footer>
             <p>
@@ -84,7 +114,9 @@
                 <p>&copy; Istoriafotbalului.ro</p>
         </footer>
 
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+        <script src = "game.js"></script>
     </body>
 
 </html>
+
