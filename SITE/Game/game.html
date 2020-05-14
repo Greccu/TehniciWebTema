@@ -67,22 +67,40 @@
             </nav>
         </header>
         <div id="container">
+            <form id = "login">
+                <div id = "logininput">
+                    <label for="username">USERNAME</label><br>
+                    <input class = "input" type="text" id="username"><br>
+                    <label for="password">PASSWORD</label><br>
+                    <input class = "input" type="password" id="password"><br>
+                    <div id = "registerform" style = "display: none">
+                        <label for='password'>CONFIRM PASSWORD</label><br>
+                        <input class = "input" type='password' id='confirmpassword'><br>
+                    </div>
+                </div> 
+                <div id = "loginbutons">
+                    <button type="button" class = "but" id = "loginbut">Login</button>
+                    <button type="button" class = "but" id = "registerbut">Register</button>
+                </div>
+                <p id = "warning"></p>
+            </form>
             <div id="scoreContainer" style="display: none"></div>
-            <div id="buttoncontainer">
+            <div id="buttoncontainer" style="display: none">
                 <button class = "but" id="start">Start Quiz!</button>
                 <button class = "but" id="highscore">Show highscores</button>
                 <button class = "but" id="quizsubmit">Submit a question</button>
+                <button class = "but" id="adminbut" style = "display: none">Manage questions</button>
             </div>
             <div id="quiz" style="display: none">
                 <div id="question"></div>
                 <div id="qImg"></div>
-                <div id="choices">
+                <div id="choices" style = "display: none;">
                     <button class="choice" id="A" onclick="checkAnswer(0)"></button>
                     <button class="choice" id="B" onclick="checkAnswer(1)"></button>
                     <button class="choice" id="C" onclick="checkAnswer(2)"></button>
                     <button class="choice" id="D" onclick="checkAnswer(3)"></button>
                 </div>
-                <div id="timer">
+                <div id="timer" style="display: none;">
                     <div id="counter"></div>
                     <div id="btimeGauge">
                         <div id="timeGauge"></div>
@@ -92,6 +110,8 @@
                 <div id="progress"></div>
             </div>
             <div id = "quizinput" style = "display: none;"></div>
+            <ul id = "quizmanager" style = "display: none;"></ul>
+
             <div class="starttext">
                 <span class="start start-1">Ready</span>
                 <span class="start start-2">Set</span>

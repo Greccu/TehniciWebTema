@@ -76,6 +76,8 @@ function textanimation(){
 }
 
 function startQuiz(){
+    choices.style.display = "grid";
+    timer.style.display = "block";
     restartProgress();
     renderQuestion();
     quiz.style.display = "grid";
@@ -211,74 +213,32 @@ function deleteQuestion(id) {
 }
 
 function updateQuesiton() {
-    var id = document.getElementById("input-id").value;
-    var name = document.getElementById("input-update-name").value;
-    var img = document.getElementById("input-update-img").value;
+    var name = document.getElementById("inputquestion").value;
+    var img = document.getElementById("inputurl").value;
+    var answer1 = document.getElementById("inputanswer1").value;
+    var answer2 = document.getElementById("inputanswer2").value;
+    var answer3 = document.getElementById("inputanswer3").value;
+    var answer4 = document.getElementById("inputanswer4").value;
+    var correctanswer = document.getElementById("correctanswer").value;
+
     var newQuestion = {
+        "question": name,
+        "answers": [[answer1,false],[answer2,false],[answer3,false],[answer4,false]],
+        "image":img
     }
 
-    console.log(newDog, id)
+    console.log(newQuestion, id)
 
     fetch('http://localhost:3000/dogs/' + id, {
         method: 'put',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(newDog)
+        body: JSON.stringify(newQuestion)
     }).then(function(response) {
         window.location.reload();
     })
 }
-
-const butoane = document.getElementById("buttoncontainer");
-const start = document.getElementById("start");
-const restart = document.getElementById("restart");
-const quiz = document.getElementById("quiz");
-const question = document.getElementById("question");
-const choiceA = document.getElementById("A");
-const choiceB = document.getElementById("B");
-const choiceC = document.getElementById("C");
-const choiceD = document.getElementById("D");
-const counter = document.getElementById("counter");
-const timeGauge = document.getElementById("timeGauge");
-const progress = document.getElementById("progress");
-const scorediv = document.getElementById("scoreContainer");
-const submit = document.getElementById("quizsubmit");
-const submitinterface = document.getElementById("quizinput");
-const loginform = document.getElementById("login");
-const loginbut = document.getElementById("loginbut");
-const registerbut = document.getElementById("registerbut");
-
-animation = anime.timeline();
-const quizlength = 10 - 1;
-let runningQuestion = 0;
-let count = 0;
-const questionTime = 10; // seconds
-let TIMER;
-let score = 0;
-let questions;
-
-var questionrequest = new XMLHttpRequest();
-questionrequest.open('GET','http://localhost:3000/questions');
-questionrequest.onload = function(){
-    questions = JSON.parse(questionrequest.responseText);
-};
-questionrequest.send();
-
-start.addEventListener('click',prestartQuiz);
-submit.addEventListener('click',submitquestion);
-loginbut.addEventListener('click',login);
-registerbut.addEventListener('click',change_to_register);
-
-/////////////////////
-
-var users;
-var usersrequest = new XMLHttpRequest();
-usersrequest.open('GET','http://localhost:3000/users');
-usersrequest.onload = function(){
-    users = JSON.parse(usersrequest.responseText);
-}
-usersrequest.send();
 
 function login(){
     let us = document.getElementById("username").value;
@@ -291,13 +251,14 @@ function login(){
         }
     }
     if(ok){
-        butoane.style.display = 'grid';
-        loginform.style.display = 'none';
+        localStorage.setItem("username",us);
+        loginsuccesful();
     }
     else{
         let warning = document.getElementById("warning");
         warning.innerHTML = "<p> USERNAME OR PASSWORD ARE INCORRECT</p>";
     }
+
 }
 
 
@@ -309,7 +270,10 @@ function change_to_register(){
     registerbut.removeEventListener('click',change_to_register);
     loginbut.addEventListener('click',change_to_login);
     registerbut.addEventListener('click',register);
-
+    for(let i = 0; i < input.length; i++){
+        input[i].removeEventListener('keypress',function(e){ if (13 == e.keyCode) {login();}})
+        input[i].addEventListener('keypress',function(e){ if (13 == e.keyCode) {register();}})
+    }
 }
 
 
@@ -320,6 +284,34 @@ function change_to_login(){
     registerbut.removeEventListener('click',register);
     loginbut.addEventListener('click',login);
     registerbut.addEventListener('click',change_to_register);
+    for(let i = 0; i < input.length; i++){
+        input[i].removeEventListener('keypress',function(e){ if (13 == e.keyCode) {register();}})
+        input[i].addEventListener('keypress',function(e){ if (13 == e.keyCode) {login();}})
+    }
+
+}
+
+function getquestions(){
+    fetch('http://localhost:3000/questions', {
+        method: 'get'
+    }).then((response) => {
+        response.json().then((data) => {
+            questions = data;
+            console.log(data);
+            console.log(questions);
+        })
+    })
+}
+
+function getusers(){
+    fetch('http://localhost:3000/users', {
+        method: 'get'
+    }).then((response) => {
+        response.json().then((data) => {
+            users = data;
+            checklogin();
+        })
+    })
 
 }
 
@@ -360,19 +352,98 @@ function register(){
     })
         }
     }
-    /*
-    var newQuestion = {
-        
+}
+
+function loginsuccesful(){
+    butoane.style.display = 'grid';
+    loginform.style.display = 'none';
+    checkadmin();
+    getquestions();
+}
+
+
+function checkadmin(){
+    if (localStorage.username == "admin"){
+        adminbut.style.display = "block";
+        adminbut.addEventListener('click',managequestions)
     }
-    newQuestion.answers[correctanswer-1][1] = true;
-    fetch('http://localhost:3000/questions', {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newQuestion)
-    }).then(function(response) {
-        console.log(response);
-    })
-    */
+}
+
+function checklogin(){
+    console.log(users);
+    for(let i = 0; i < users.length; i++){
+        if(users[i].username == localStorage.username){
+            loginsuccesful();
+            break;
+        }
+    }
+    
+}
+
+
+const butoane = document.getElementById("buttoncontainer");
+const start = document.getElementById("start");
+const restart = document.getElementById("restart");
+const quiz = document.getElementById("quiz");
+const question = document.getElementById("question");
+const choiceA = document.getElementById("A");
+const choiceB = document.getElementById("B");
+const choiceC = document.getElementById("C");
+const choiceD = document.getElementById("D");
+const counter = document.getElementById("counter");
+const timeGauge = document.getElementById("timeGauge");
+const progress = document.getElementById("progress");
+const scorediv = document.getElementById("scoreContainer");
+const submit = document.getElementById("quizsubmit");
+const submitinterface = document.getElementById("quizinput");
+const loginform = document.getElementById("login");
+const loginbut = document.getElementById("loginbut");
+const registerbut = document.getElementById("registerbut");
+const input = document.getElementsByClassName("input");
+const quizmanager = document.getElementById("quizmanager")
+const adminbut = document.getElementById("adminbut");
+const quizlength = 10 - 1;
+const questionTime = 10; // seconds
+var animation = anime.timeline();
+var runningQuestion = 0;
+var count = 0;
+var TIMER;
+var score = 0;
+var questions;
+var users;
+//////// get users and check login
+getusers();
+
+window.onload = function(){
+
+    
+    start.addEventListener('click',prestartQuiz);
+    submit.addEventListener('click',submitquestion);
+    loginbut.addEventListener('click',login);
+    registerbut.addEventListener('click',change_to_register);
+    for(let i = 0; i < input.length; i++){
+        input[i].addEventListener('keypress',function(e){ if (13 == e.keyCode) {login();}})
+    }
+
+}
+
+
+function managequestions(){
+    butoane.style.display = "none";
+    quizmanager.style.display = "flex";
+    for(let i=0; i<questions.length; i++){
+        quizmanager.innerHTML += "<li id = 'expandmenu" + questions[i].id + "'>" + questions[i].question +"<button class = 'expand' id = 'expandbut" + questions[i].id + "'></button></li>";
+        let buttt = document.getElementById("expandbut" + questions[i].id)
+        buttt.addEventListener('click',expand(questions[i].id))
+    }
+}
+
+function expand(id){
+    console.log(id)
+    let exp = document.getElementById("expandmenu"+id)
+    console.log("expandmenu"+id)
+    console.log(exp)
+    exp.innerHTML += 'dsgsdgsfdg<br>adsdasf';
+    //exp.style.height = "100px"
+    //document.getElementById("expandbut"+id).removeEventListener('click',expand(id))
 }
