@@ -2,7 +2,7 @@
 
 body{
     background: url('animatedbg.png') repeat;
-    background-size: 120px auto;
+    background-size: 103px auto;
     background-color: #333;
 }
 
@@ -370,5 +370,3 @@ footer{
     width: 30%;
     margin: auto;
 }
-
-
