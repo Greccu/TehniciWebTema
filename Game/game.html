@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html lang="ro">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="descrition" content="Acest site prezinta istoria fotbalului cele mai bune echipe de fotbal din prezent si din trecut, dar si multe altele!">
+        <meta name="author" content="Grecu Cristian">
+        <meta name="viewport" content="width=device-width">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Istoria Fotbalului - Game</title>
+        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="game.css">
+        <link rel="shortcut icon" type="image/x-icon" href="../icon.ico" />
+
+
+    </head>
+
+    <body>
+
+        <header>
+            <div class="logo_container">
+                <a href="../index.html" class="headertext">Istoria Fotbalului</a>
+            </div>
+            <nav>   
+                <label for="drop" class="toggle" id='main-toggle'><span class="nav-icon"></span></label>
+                <input type="checkbox" id="drop">
+                <ul class="menu">
+                    <li>
+                        <label for="drop-1" class="toggle">Turnee</label>
+                        <a href="#">Turnee</a>
+                        <input type="checkbox" id="drop-1">
+                        <ul>
+                            <li><a href="..//Turnee/champions-league.html"> UEFA Champions League </a></li>
+                            <li><a href="../Turnee/europa-league.html"> UEFA Europa League </a></li>
+                            <li><a href="../Turnee/world-cup.html"> FIFA World Cup </a></li>
+                            <li><a href="../Turnee/others.html"> Alte Competitii </a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <label for="drop-2" class="toggle">Cluburi Legendare</label>
+                        <a href="#">Cluburi Legendare</a>
+                        <input type="checkbox" id="drop-2">
+                        <ul>
+                            <li><a href="../Cluburi/barcelona.html"> FC Barcelona </a></li>
+                            <li><a href="../Cluburi/real-madrid.html"> Real Madrid </a></li>
+                            <li><a href="../Cluburi/manchester-united.html"> Manchester United </a></li>
+                            <li><a href="../Cluburi/ac-milan.html"> AC Milan </a></li>
+                            <li><a href="../Cluburi/steaua.html"> FC Steaua Bucuresti</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <label for="drop-3" class="toggle">Jucatori Legendari</label>
+                        <a href="#">Jucatori Legendari</a>
+                        <input type="checkbox" id="drop-3">
+                        <ul>
+                            <li><a href="../Jucatori/messi.html"> Lionel Messi </a></li>
+                            <li><a href="../Jucatori/ronaldo.html"> Cristiano Ronaldo </a></li>
+                            <li><a href="../Jucatori/pele.html"> Pelé </a></li>
+                            <li><a href="../Jucatori/maradona.html"> Diego Maradona </a></li>
+                            <li><a href="../Jucatori/hagi.html"> Gheorge Hagi</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="../Game/game.html"> Quiz/Game </a></li>
+                </ul>
+            </nav>
+        </header>
+        <div id="container">
+            <form id = "login">
+                <div id = "logininput">
+                    <label for="username">USERNAME</label><br>
+                    <input class = "input" type="text" id="username"><br>
+                    <label for="password">PASSWORD</label><br>
+                    <input class = "input" type="password" id="password"><br>
+                    <div id = "registerform" style = "display: none">
+                        <label for='password'>CONFIRM PASSWORD</label><br>
+                        <input class = "input" type='password' id='confirmpassword'><br>
+                    </div>
+                </div> 
+                <div id = "loginbutons">
+                    <button type="button" class = "but" id = "loginbut">Login</button>
+                    <button type="button" class = "but" id = "registerbut">Register</button>
+                </div>
+                <p id = "warning"></p>
+            </form>
+            <div id="scoreContainer" style="display: none"></div>
+            <div id="buttoncontainer" style="display: none">
+                <button class = "but" id="start">Start Quiz!</button>
+                <button class = "but" id="highscore">Show highscores</button>
+                <button class = "but" id="quizsubmit">Submit a question</button>
+                <button class = "but" id="adminbut" style = "display: none">Manage questions</button>
+                <button class = "but" id="adminbut2" style = "display: none">Manage users</button>
+                <button class = "but" id="logoutubt" onclick="logout()">Log Out</button>
+            </div>
+            <div id="quiz" style="display: none">
+                <div id="question"></div>
+                <div id="qImg"></div>
+                <div id="choices" style = "display: none;">
+                    <button class="choice" id="A" onclick="checkAnswer(0)"></button>
+                    <button class="choice" id="B" onclick="checkAnswer(1)"></button>
+                    <button class="choice" id="C" onclick="checkAnswer(2)"></button>
+                    <button class="choice" id="D" onclick="checkAnswer(3)"></button>
+                </div>
+                <div id="timer" style="display: none;">
+                    <div id="counter"></div>
+                    <div id="btimeGauge">
+                        <div id="timeGauge"></div>
+                    </div>
+                    
+                </div>
+                <div id="progress"></div>
+            </div>
+            <div id = "quizinput" style = "display: none;"></div>
+            <ul class = "manager" id = "quizmanager" style = "display: none;"></ul>
+            <ul class = "manager" id = "usersmanager" style = "display: none;"></ul>
+            <div id = "highscores" style = "display: none;">
+                <ul id = "scores"></ul>
+                <br>
+                <button class = 'but' id='resetown'>Reset OWN HS</button>
+                <button class = 'but' id='reset'>Reset HighScores</button>
+                <button class = 'but' id='back'>Back</button>
+            </div>
+            <div class="starttext">
+                <span class="start start-1">Ready</span>
+                <span class="start start-2">Set</span>
+                <span class="start start-3">Go!</span>
+            </div>
+        </div>
+        <canvas id="canvas"></canvas>
+        <footer>
+            <p>
+                Contact
+                    ✦ 
+                <a href="https://github.com/Greccu">GitHub</a>
+                &nbsp;|&nbsp;
+                <a href="https://www.facebook.com/cristian.grecu.165">Facebook</a>
+                &nbsp;|&nbsp;
+                <a href="mailto:crscrs352@gmail.com?Subject=Hello%20again" target="_top">Mail</a>
+                &nbsp;|&nbsp;
+                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8S6MG7PR6EQPS&source=url">Donatii</a>
+            </p>
+                <p>&copy; Istoriafotbalului.ro</p>
+        </footer>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+        <script src = "game.js"></script>
+    </body>
+
+</html>
+

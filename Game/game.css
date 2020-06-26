@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@1,300&display=swap');
+
+body{
+    background: url('animatedbg.png') repeat;
+    background-size: 120px auto;
+    background-color: #333;
+}
+
+#login{
+    width: 50%;
+    margin: 1% auto;
+    text-align: center;
+    font-size: 25px;
+    color: white;
+}
+
+#login input{
+    border-radius: 10%;
+    margin: 0 0 20px;
+    background-color: #0f8f56;
+    border: none;
+    color: white;
+    box-shadow: 5px 5px 5px black;
+}
+
+
+#login .but{
+    width: 50%;
+    margin: 5% auto;
+}
+
+
+
+footer{
+    position: fixed;
+    bottom: 80px;
+}
+#container{
+    font-family: 'DM Mono', monospace;
+    display: block;
+    margin : 5% 25%;
+    background-color: #004a01;
+    height: 50%;
+    width : 50%;
+    border-radius: 25px;
+    box-sizing: border-box;
+    position: absolute;
+    font-size: 20px;
+    font-family: monospace;
+    color:black;
+    animation: quizanim 5s infinite;
+    
+}
+
+@keyframes quizanim{
+    50%{ box-shadow: 0px 20px 25px 0px black;}
+ }
+
+#buttoncontainer{
+    display: grid;
+    width: 50%;
+    height: 50%;
+    margin: 10% auto;
+}
+
+.but,.choice{
+    background-color: #004a01;
+    font-size: 100%;
+    font-weight: bolder;
+    border : 5px double #b2c899;
+    margin: 10px;
+    border-radius: 30%;
+    text-align: center;
+    cursor: pointer;
+    color : #b2c899;
+    box-shadow: 0px 10px 15px black;
+}
+
+.but:hover,.choice:hover{
+    background-color: #3e8e41;
+}
+.but:active,.choice:active{
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+
+#quiz{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    grid-template-rows: 25% 30% 30% 15%;
+    grid-template-areas: 
+        "image question"
+        "image choices"
+        "timer choices"
+        "timer progress";
+}
+
+#qImg{
+    grid-area: image;
+    margin: 0;
+    padding: 0;
+    left : 0px;
+    top : 0px;
+}
+
+#qImg img{
+    width : 100%;
+    height : auto;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    border-top-left-radius: 25px;
+    vertical-align: 0;
+}
+
+#question{
+    grid-area: question;
+    text-align: center;
+}
+#question p{
+    margin : auto;
+    padding: auto;
+    padding : 15px;
+    font-size: 30px;
+    color: teal;
+    font-weight: bold;
+}
+
+#choices{
+    grid-area: choices;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+}
+
+.choice{
+    width: 75%;
+    height: 75%;
+    margin: auto;
+}
+.choice:hover{
+    border : 2px solid grey;
+    font-weight: bold;
+}
+
+#timer{
+    grid-area: timer;
+    text-align: center;
+    padding: 0;
+    margin: auto 0;
+}
+#counter{
+    font-size: 50px;
+    line-height: normal;
+}
+#btimeGauge{
+    width : 80%;
+    height : 10px;
+    border-radius: 10px;
+    border: 2px solid black;
+    background-color: lightgray;
+    margin-left : 25px;
+}
+#timeGauge{
+    height : 10px;
+    border-radius: 10px;
+    background-color: mediumseagreen;
+    margin-left : 0;
+}
+#progress{
+    grid-area: progress;
+    padding: 5px;
+    text-align: right;
+    margin: auto;
+
+}
+.prog{
+    width : 25px;
+    height : 25px;
+    border: 1px solid #000;
+    display: inline-block;
+    border-radius: 50%;
+    margin-left : 5px;
+    margin-right : 5px;
+}
+#scoreContainer{
+    margin : 2px auto 0 auto;
+    background-color: transparent;
+    height: 10%;
+    width: 50%;
+    border-radius: 5px;
+    box-shadow: 0px 5px 15px black;
+    position: relative;
+    display: none;
+    text-align: center;
+    color: white;
+    animation: scoreanim 5s infinite;
+    font-size: 35px;
+    line-height: unset;
+}
+
+@keyframes scoreanim{
+    50%{box-shadow: none;}
+}
+
+#scoreContainer img{
+    position: absolute;
+    top:100px;
+    left:325px;
+}
+#scoreContainer p{
+    position: absolute;
+    display: block;
+    width : 59px;
+    height :59px;
+    top:130px;
+    left:325px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+}
+
+#quizinput{
+    width: 50%;
+    margin: auto;
+}
+
+#quizinput .but{
+    width: 40%;
+    height: 90%;
+    margin: 5px auto 0px;
+}
+
+#quizinput input{
+    width: 75%;
+    margin: 0 auto;
+    box-shadow: 5px 5px 5px black;
+    border-radius: 0;
+    background-color: green;
+}
+
+#quizinput p{
+    text-align: center;
+    margin: 0;
+    color:white;
+
+}
+
+.starttext {
+    display: block;
+    padding: 0;
+    margin: 25% 0;
+    width: 100%;
+    height: 50%;
+    line-height: 0;
+    text-align: center;
+    color:red;
+    font-weight: 900;
+    font-size: 70px;
+  }
+
+.starttext .start{
+    display: block;
+    width: 50%;
+    margin: auto;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    opacity: 0; 
+    color: white;
+  }
+
+@media all and (max-width:1280px){
+    #container{
+        margin: 0 2%;
+        width: 96%;
+        height: 75%;
+    }
+}
+
+#warning{
+    text-align: center;
+    color: red;
+    font-size: 25px;
+}
+
+.manager{
+    color: blue;
+    width: 96%;
+    height: 92%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 2%;
+    padding: 0;
+    line-height: normal;
+}
+
+.manager li{
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 5px 0px 0px;
+    padding: 5px;
+    background-color: red;
+    color: blue;
+}
+
+.expand{
+    width: 10px;
+    height: 10px;
+    line-height: normal;
+}
+
+.expandable{
+    color: black;
+}
+
+#highscores{
+    width: 100%;
+    height: 80%;
+    margin: 2% auto;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 60% 13% 13% 13%;
+    grid-template-areas: 
+    "scores"
+    "but1"
+    "but2"
+    "but3"
+    ;
+
+}
+#scores{
+    grid-area: scores;
+    width: 90%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+#scores li{
+    text-align: center;
+    color: wheat;
+}
+
+#reset{
+    grid-area: but1;
+    width: 30%;
+    margin: auto;
+}
+
+#resetown{
+    grid-area: but2;
+    width: 30%;
+    margin: auto;
+}
+
+#back{
+    grid-area: but3;
+    width: 30%;
+    margin: auto;
+}
+
+
