@@ -11,7 +11,7 @@ function renderQuestion(){
 }
 
 function prestartQuiz(){
-    questions.sort(() => Math.random() - 0.5); //shuffles the array
+    questions.sort(() => Math.random() - 0.5); //shuffles the questions array
     scorediv.style.display = "none";
     runningQuestion = 0;
     count = 0;
@@ -146,7 +146,7 @@ function scoreRender(){
     quiz.style.display = "none";
     scorediv.style.display = "block";
     scorediv.innerHTML = "Score: " + score;
-
+    submitscore();
 }
 
 function submitquestion(){
@@ -168,6 +168,8 @@ function submitquestion(){
 function cancelrestore(){
     butoane.style.display = "grid";
     submitinterface.style.display = "none";
+    quizmanager.style.display = "none";
+    highscorediv.style.display = "none";
     if(start.innerHTML == "Restart Quiz!"){
         scorediv.style.display = "block";
     }
@@ -229,7 +231,7 @@ function updateQuesiton() {
 
     console.log(newQuestion, id)
 
-    fetch('http://localhost:3000/dogs/' + id, {
+    fetch('http://localhost:3000/questions/' + id, {
         method: 'put',
         headers: {
             'Content-Type': 'application/json'
@@ -365,7 +367,14 @@ function loginsuccesful(){
 function checkadmin(){
     if (localStorage.username == "admin"){
         adminbut.style.display = "block";
-        adminbut.addEventListener('click',managequestions)
+        adminbut.addEventListener('click',managequestions);
+        adminbut2.style.display = "block";
+        adminbut2.addEventListener('click',manageusers);
+    }
+    else{
+        adminbut2.style.display = "block";
+        adminbut2.addEventListener('click',manageuser);
+        adminbut2.innerHTML = "Manage your user";
     }
 }
 
@@ -401,7 +410,12 @@ const loginbut = document.getElementById("loginbut");
 const registerbut = document.getElementById("registerbut");
 const input = document.getElementsByClassName("input");
 const quizmanager = document.getElementById("quizmanager")
+const usersmanager = document.getElementById("quizmanager")
 const adminbut = document.getElementById("adminbut");
+const adminbut2 = document.getElementById("adminbut2");
+const highscorebut = document.getElementById("highscore");
+const highscorediv = document.getElementById("highscores");
+const scores = document.getElementById("scores");
 const quizlength = 10 - 1;
 const questionTime = 10; // seconds
 var animation = anime.timeline();
@@ -411,16 +425,17 @@ var TIMER;
 var score = 0;
 var questions;
 var users;
+var highs;
 //////// get users and check login
 getusers();
 
 window.onload = function(){
-
-    
     start.addEventListener('click',prestartQuiz);
     submit.addEventListener('click',submitquestion);
     loginbut.addEventListener('click',login);
     registerbut.addEventListener('click',change_to_register);
+    highscorebut.addEventListener('click',showhighscores)
+
     for(let i = 0; i < input.length; i++){
         input[i].addEventListener('keypress',function(e){ if (13 == e.keyCode) {login();}})
     }
@@ -431,11 +446,20 @@ window.onload = function(){
 function managequestions(){
     butoane.style.display = "none";
     quizmanager.style.display = "flex";
+    quizmanager.innerHTML = "";
+    let buttt;
     for(let i=0; i<questions.length; i++){
         quizmanager.innerHTML += "<li id = 'expandmenu" + questions[i].id + "'>" + questions[i].question +"<button class = 'expand' id = 'expandbut" + questions[i].id + "'></button></li>";
-        let buttt = document.getElementById("expandbut" + questions[i].id)
+        buttt = document.getElementById("expandbut" + questions[i].id)
         buttt.addEventListener('click',expand(questions[i].id))
     }
+    quizmanager.innerHTML += "<button class = 'but' id='cancel2'>Cancel</button>";
+    const cancel2 = document.getElementById("cancel2");
+    cancel2.addEventListener('click',cancelrestore);
+}
+
+function cancelrestore2(){
+
 }
 
 function expand(id){
@@ -443,7 +467,197 @@ function expand(id){
     let exp = document.getElementById("expandmenu"+id)
     console.log("expandmenu"+id)
     console.log(exp)
-    exp.innerHTML += 'dsgsdgsfdg<br>adsdasf';
+    exp.innerHTML += '<br>expandable menu';
     //exp.style.height = "100px"
     //document.getElementById("expandbut"+id).removeEventListener('click',expand(id))
 }
+
+function logout(){
+    localStorage.clear();
+    location.reload();
+}
+
+function showhighscores(){
+    butoane.style.display = "none";
+    highscorediv.style.display = "grid";
+    fetch('http://localhost:3000/highscores', {
+        method: 'get'
+    }).then((response) => {
+        response.json().then((data) => {
+            highs = data;
+            highs.sort(function(a,b){
+                return b.score - a.score;
+            });
+            console.log(highs);
+            scores.innerHTML = ""
+            for(let i = 0;i<10 && i<highs.length;i++){
+                scores.innerHTML += "<li>" + highs[i].username + " - " + highs[i].score +  " - " + highs[i].date + "</li>";
+            }
+            const resetscores = document.getElementById("reset")
+            resetscores.addEventListener('click',resethighscores)
+            const resetownscores = document.getElementById("resetown")
+            resetownscores.addEventListener('click',resetownhighscores)
+            const cancel3 = document.getElementById("back");
+            cancel3.addEventListener('click',cancelrestore);
+        })
+    })
+    
+}
+
+
+function submitscore(){
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = dd + '/' + mm + '/' + yyyy;
+    var newScore = {
+        "score": score,
+        "username": localStorage.username,
+        "date": today
+        
+    }
+    fetch('http://localhost:3000/highscores', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newScore)
+    }).then(function(response) {
+        //response.preventDefault();
+        console.log(response);
+    })
+}
+
+function resethighscores(){
+    fetch('http://localhost:3000/highscores/', {
+        method: 'delete',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(function(response) {
+        console.log(response);
+        //window.location.reload();
+    })
+
+}
+
+function resetownhighscores(){
+    console.log("reseting")
+    let uhs = localStorage.username;
+    for(let i = 0; i < highs.length; i++){
+        if(uhs == highs[i].username){
+            console.log('deleting from http://localhost:3000/highscores/' + highs[i].id)
+            fetch('http://localhost:3000/highscores/' + highs[i].id, {
+                method: 'delete',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function(response) {
+                console.log(response);
+            })
+
+        }
+    }
+
+}
+
+
+function manageusers(){
+    butoane.style.display = "none";
+    usersmanager.style.display = "flex";
+    usersmanager.innerHTML = "";
+    let usbut;
+    for(let i=0; i<users.length; i++){
+        usersmanager.innerHTML += "<li id = 'expandmenu" + users[i].id + "'>" + users[i].username +"<button class = 'expand' id = 'deletebut" + users[i].id + "'onclick = 'deleteuser( "+ users[i].id+")'></button></li>";
+        usbut = document.getElementById("deletebut" + users[i].id)
+    }
+    usersmanager.innerHTML += "<button class = 'but' id='cancelll'>Cancel</button>";
+    let cancelll = document.getElementById("cancelll");
+    cancelll.addEventListener('click',cancelrestore);
+}
+
+function deleteuser(id){
+    fetch('http://localhost:3000/users/' + id, {
+        method: 'delete',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(function(response) {
+        //window.location.reload();
+        console.log(response)
+    })
+}
+
+
+
+function manageuser(){
+    butoane.style.display = "none";
+    usersmanager.style.display = "flex";
+    usersmanager.innerHTML = "<p>Enter new username</p><input id = 'newusernameinput'>";
+    usersmanager.innerHTML += "<p>Enter new password</p><input id = 'newpasswordinput'>";
+    usersmanager.innerHTML += "<button class = 'but' id='newusername'>Update username</button>";
+    usersmanager.innerHTML += "<button class = 'but' id='newpassword'>Update password</button>";
+    usersmanager.innerHTML += "<button class = 'but' id='canceluser'>Cancel</button>";
+    let canceluser = document.getElementById("canceluser");
+    let updateusername = document.getElementById('newusername');
+    let updatepassword = document.getElementById('newpassword');
+    canceluser.addEventListener('click',cancelrestore);
+    updateusername.addEventListener('click',updateusernamef);
+    updatepassword.addEventListener('click',updatepasswordf);
+}
+
+function updateusernamef(){
+    var newusername = document.getElementById("newusernameinput").value;
+    for(let i = 0; i < users.length; i ++){
+        if(localStorage.username == users[i].username){
+            var updatedUser = users[i];
+            break;
+        }
+    }
+    updatedUser.username = newusername;
+    id = updatedUser.id;
+    console.log(updatedUser);
+    fetch('http://localhost:3000/users/' + id, {
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedUser)
+    }).then(function(response) {
+        //window.location.reload();
+        console.log(response)
+    })
+}
+
+function updatepasswordf(){
+    var newpassword = document.getElementById("newpasswordinput").value;
+    for(let i = 0; i < users.length; i ++){
+        if(localStorage.username == users[i].username){
+            var updatedUser = users[i];
+            break;
+        }
+    }
+    updatedUser.password = newpassword;
+    id = updatedUser.id;
+    console.log(updatedUser);
+    fetch('http://localhost:3000/users/' + id, {
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedUser)
+    }).then(function(response) {
+        //window.location.reload();
+        console.log(response)
+    })
+}
+
+let position = 0;
+let bgtimer = setInterval(move,20);
+function move(){
+        document.body.style.backgroundPosition = position + 'px' ;
+        position += 1;
+}
+
+

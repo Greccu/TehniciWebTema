@@ -90,6 +90,8 @@
                 <button class = "but" id="highscore">Show highscores</button>
                 <button class = "but" id="quizsubmit">Submit a question</button>
                 <button class = "but" id="adminbut" style = "display: none">Manage questions</button>
+                <button class = "but" id="adminbut2" style = "display: none">Manage users</button>
+                <button class = "but" id="logoutubt" onclick="logout()">Log Out</button>
             </div>
             <div id="quiz" style="display: none">
                 <div id="question"></div>
@@ -110,15 +112,22 @@
                 <div id="progress"></div>
             </div>
             <div id = "quizinput" style = "display: none;"></div>
-            <ul id = "quizmanager" style = "display: none;"></ul>
-
+            <ul class = "manager" id = "quizmanager" style = "display: none;"></ul>
+            <ul class = "manager" id = "usersmanager" style = "display: none;"></ul>
+            <div id = "highscores" style = "display: none;">
+                <ul id = "scores"></ul>
+                <br>
+                <button class = 'but' id='resetown'>Reset OWN HS</button>
+                <button class = 'but' id='reset'>Reset HighScores</button>
+                <button class = 'but' id='back'>Back</button>
+            </div>
             <div class="starttext">
                 <span class="start start-1">Ready</span>
                 <span class="start start-2">Set</span>
                 <span class="start start-3">Go!</span>
             </div>
         </div>
-
+        <canvas id="canvas"></canvas>
         <footer>
             <p>
                 Contact

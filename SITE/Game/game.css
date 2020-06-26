@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@1,300&display=swap');
 
+body{
+    background: url('animatedbg.png') repeat;
+    background-size: 120px auto;
+    background-color: #333;
+}
+
 #login{
     width: 50%;
     margin: 1% auto;
@@ -234,6 +240,7 @@ footer{
     margin: 0 auto;
     box-shadow: 5px 5px 5px black;
     border-radius: 0;
+    background-color: green;
 }
 
 #quizinput p{
@@ -283,7 +290,7 @@ footer{
     font-size: 25px;
 }
 
-#quizmanager{
+.manager{
     color: blue;
     width: 96%;
     height: 92%;
@@ -296,7 +303,7 @@ footer{
     line-height: normal;
 }
 
-#quizmanager li{
+.manager li{
     display: block;
     width: 100%;
     height: 100%;
@@ -313,5 +320,55 @@ footer{
 }
 
 .expandable{
+    color: black;
+}
+
+#highscores{
+    width: 100%;
+    height: 80%;
+    margin: 2% auto;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 60% 13% 13% 13%;
+    grid-template-areas: 
+    "scores"
+    "but1"
+    "but2"
+    "but3"
+    ;
 
 }
+#scores{
+    grid-area: scores;
+    width: 90%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+#scores li{
+    text-align: center;
+    color: wheat;
+}
+
+#reset{
+    grid-area: but1;
+    width: 30%;
+    margin: auto;
+}
+
+#resetown{
+    grid-area: but2;
+    width: 30%;
+    margin: auto;
+}
+
+#back{
+    grid-area: but3;
+    width: 30%;
+    margin: auto;
+}
+
+
