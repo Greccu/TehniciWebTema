@@ -672,26 +672,28 @@ function move(){
 
 var canvas = document.getElementById("canvas");
 var c = canvas.getContext("2d");
-var tx = window.innerWidth;
-var ty = window.innerHeight;
-canvas.width = tx;
-canvas.height = ty;
-var grav = 0.99;
+var wx = window.innerWidth;
+var wy = window.innerHeight;
+canvas.width = wx;
+canvas.height = wy;
+var gravity = 1;
 c.strokeWidth=5;
 
 function Ball() {
-    this.color = '#004a01';
-    this.radius = Math.random() * 20 + 14;
-    this.x = Math.random() * (tx - this.radius * 2) + this.radius;
-    this.y = Math.random() * (ty - this.radius);
+    this.color = 'red';
+    this.radius = Math.random() * 10 + 20;
+    this.x = Math.random() * (wx - this.radius * 2) + this.radius;
+    this.y = Math.random() * (wy - this.radius);
     this.dy = Math.random() * 2;
     this.dx = Math.round((Math.random() - 0.5) * 10);
-    this.vel = Math.random() /5;
+    this.velocity = 0.2;
     this.update = function() {
-    c.beginPath();
-    c.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    c.fillStyle = this.color;
-    c.fill();
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, 15);
+        c.fillStyle = this.color;
+        c.shadowBlur = 20;
+        c.shadowColor = "black";
+        c.fill();
 };
 }
 
@@ -701,33 +703,34 @@ for (var i=0; i<200; i++){
 }
 
 function animate() {    
-  if (tx != window.innerWidth || ty != window.innerHeight) {
-    tx = window.innerWidth;
-    ty = window.innerHeight;
-    canvas.width = tx;
-    canvas.height = ty;
-  }
-  requestAnimationFrame(animate);
-  c.clearRect(0, 0, tx, ty);
-  for (var i = 0; i < bal.length; i++) {
-    bal[i].update();
-    bal[i].y += bal[i].dy;
-    bal[i].x += bal[i].dx;
-    if (bal[i].y + bal[i].radius >= ty) {
-      bal[i].dy = -bal[i].dy * grav;
-    } else {
-      bal[i].dy += bal[i].vel;
-    }    
-    if(bal[i].x + bal[i].radius > tx || bal[i].x - bal[i].radius < 0){
-        bal[i].dx = -bal[i].dx;
+    if (wx != window.innerWidth || wy != window.innerHeight) {
+        wx = window.innerWidth;
+        wy = window.innerHeight;
+        canvas.width = wx;
+        canvas.height = wy;
     }
-    }
+    requestAnimationFrame(animate);
+    c.clearRect(0, 0, wx, wy);
+    for (var i = 0; i < bal.length; i++) {
+        bal[i].update();
+        bal[i].y += bal[i].dy;
+        bal[i].x += bal[i].dx;
+        if (bal[i].y + bal[i].radius >= wy) {
+            bal[i].dy = -bal[i].dy * gravity;
+        } 
+        else {
+            bal[i].dy += bal[i].velocity;
+        }    
+        if(bal[i].x + bal[i].radius > wx || bal[i].x - bal[i].radius < 0){
+            bal[i].dx *= -1;
+        }
+        }
 }
 
 animate();
 
+// la 400ms schimb mingiile
 setInterval(function() {
-  bal.push(new Ball());
-  bal.splice(0, 1);
-}, 400);
-
+    bal.push(new Ball());
+    bal.splice(0, 1);
+  }, 400);
