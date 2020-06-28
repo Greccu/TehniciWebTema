@@ -670,26 +670,26 @@ function move(){
 
 
 
-var canvas = document.getElementById("canvas");
+var canvas = document.getElementById("balls");
 var c = canvas.getContext("2d");
 var wx = window.innerWidth;
 var wy = window.innerHeight;
 canvas.width = wx;
 canvas.height = wy;
-var gravity = 1;
-c.strokeWidth=5;
+c.strokeWidth = 5;
+
 
 function Ball() {
-    this.color = 'red';
-    this.radius = Math.random() * 10 + 20;
+    this.color = '#1a2fff';
+    this.radius = 25;
     this.x = Math.random() * (wx - this.radius * 2) + this.radius;
     this.y = Math.random() * (wy - this.radius);
     this.dy = Math.random() * 2;
     this.dx = Math.round((Math.random() - 0.5) * 10);
-    this.velocity = 0.2;
+    this.velocity = 0.6;
     this.update = function() {
         c.beginPath();
-        c.arc(this.x, this.y, this.radius, 0, 15);
+        c.arc(this.x, this.y, this.radius, 0, 4 * Math.PI);
         c.fillStyle = this.color;
         c.shadowBlur = 20;
         c.shadowColor = "black";
@@ -698,25 +698,19 @@ function Ball() {
 }
 
 var bal = [];
-for (var i=0; i<200; i++){
+for (var i=0; i<100; i++){
     bal.push(new Ball());
 }
 
 function animate() {    
-    if (wx != window.innerWidth || wy != window.innerHeight) {
-        wx = window.innerWidth;
-        wy = window.innerHeight;
-        canvas.width = wx;
-        canvas.height = wy;
-    }
-    requestAnimationFrame(animate);
+    window.requestAnimationFrame(animate);
     c.clearRect(0, 0, wx, wy);
     for (var i = 0; i < bal.length; i++) {
         bal[i].update();
         bal[i].y += bal[i].dy;
         bal[i].x += bal[i].dx;
         if (bal[i].y + bal[i].radius >= wy) {
-            bal[i].dy = -bal[i].dy * gravity;
+            bal[i].dy = -bal[i].dy;
         } 
         else {
             bal[i].dy += bal[i].velocity;
@@ -729,8 +723,7 @@ function animate() {
 
 animate();
 
-// la 400ms schimb mingiile
 setInterval(function() {
     bal.push(new Ball());
     bal.splice(0, 1);
-  }, 400);
+  }, 1000);
